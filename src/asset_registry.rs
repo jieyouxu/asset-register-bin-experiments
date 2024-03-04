@@ -22,6 +22,21 @@ impl<W: Write> Writable<W> for AssetRegistry {
         self.header.write(writer)?;
         writer.write_u32::<LE>(self.asset_count)?;
 
+        // Save store data and collect FNames
+        // int64 BodySize = MemWriter.TotalSize();
+        // SaveStore(Tags.Finalize(), *this);
+
+        // SaveItem(BeginMagic);
+        // VisitViews(Store, [&] (auto Array) { SaveItem(Array.Num()); });
+        // SaveTextData(MakeArrayView(Store.Texts));
+        // VisitViews<EOrder::SkipText>(Store, [&] (auto Array) { SaveViewData(MakeArrayView(Array)); });
+        // SaveItem(EndMagic);
+
+        // Save in load-friendly order - names, store then body / tag maps
+        // SaveNameBatch(FlattenIndex(Names), TargetAr);
+        // TargetAr.Serialize(MemWriter.GetData() + BodySize, MemWriter.TotalSize() - BodySize);
+        // TargetAr.Serialize(MemWriter.GetData(), BodySize);
+
         todo!()
     }
 }

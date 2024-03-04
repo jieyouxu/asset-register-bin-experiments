@@ -5,8 +5,9 @@ mod asset_registry_header;
 mod asset_registry_version;
 mod logging;
 mod read;
-mod write;
+mod store_data;
 mod unreal_types;
+mod write;
 
 use color_eyre::eyre::{Context, Result as EResult};
 use fs_err as fs;
