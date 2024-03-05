@@ -88,18 +88,28 @@ impl<W: Write> Writable<W> for StoreData {
 
         let ansi_string_offsets = {
             let mut offsets = vec![];
-            let mut offset = 0;
+            let mut current_offset = 0;
             for s in &self.ansi_strings {
-                todo!()
+                let next_offset = current_offset + s.len() + 1; // + 1 for NUL-terminator
+                offsets.push(current_offset as u32);
+                current_offset = next_offset;
             }
+            offsets
         };
 
-        write_array(writer, &self.ansi_string_offsets, |w, o| {
-            w.write_u32::<LE>(*o)
-        })?;
-        write_array(writer, &self.wide_string_offsets, |w, o| {
-            w.write_u32::<LE>(*o)
-        })?;
+        let wide_string_offsets = {
+            let mut offsets = vec![];
+            let mut current_offset = 0;
+            for s in &self.ansi_strings {
+                let next_offset = current_offset + s.len() + 1; // + 1 for NUL-terminator
+                offsets.push(current_offset as u32);
+                current_offset = next_offset;
+            }
+            offsets
+        };
+
+        write_array(writer, &ansi_string_offsets, |w, o| w.write_u32::<LE>(*o))?;
+        write_array(writer, &wide_string_offsets, |w, o| w.write_u32::<LE>(*o))?;
         write_array(writer, &self.ansi_strings, |w, s| -> EResult<()> {
             w.write_all(s.as_bytes())?;
             w.write_u8(0)?;
