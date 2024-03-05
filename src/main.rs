@@ -1,11 +1,14 @@
 #![feature(let_chains)]
+#![feature(str_from_utf16_endian)]
 
 mod asset_registry;
+mod asset_registry_export_path;
 mod asset_registry_header;
 mod asset_registry_version;
 mod logging;
 mod read;
 mod store_data;
+mod top_level_asset_path;
 mod unreal_types;
 mod write;
 
