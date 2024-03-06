@@ -5,7 +5,7 @@ pub trait Writable<W> {
     fn write(&self, writer: &mut W) -> EResult<()>;
 }
 
-#[instrument(skip_all, fields(len = array.len()))]
+#[instrument(name = "write_array", skip_all, fields(len = array.len()))]
 pub fn write_array<W, T, E>(
     writer: &mut W,
     array: &[T],

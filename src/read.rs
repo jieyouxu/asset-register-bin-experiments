@@ -8,7 +8,7 @@ pub trait Readable<R> {
 }
 
 #[must_use]
-#[instrument(skip(reader, f))]
+#[instrument(name = "read_array", skip(reader, f))]
 pub fn read_array<R, T, E>(
     length: u32,
     reader: &mut R,

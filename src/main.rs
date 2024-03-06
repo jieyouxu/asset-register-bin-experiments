@@ -1,30 +1,43 @@
 #![feature(let_chains)]
 #![feature(str_from_utf16_endian)]
+#![warn(unit_bindings)]
 
-mod asset_registry;
-mod asset_registry_export_path;
 mod asset_registry_header;
 mod asset_registry_version;
 mod logging;
 mod read;
-mod store_data;
-mod top_level_asset_path;
-mod unreal_types;
 mod write;
+mod names_batch;
+mod serialized_name_header;
 
-use color_eyre::eyre::{Context, Result as EResult};
+use std::path::PathBuf;
+
+use color_eyre::eyre::{eyre, Result as EResult};
 use fs_err as fs;
+use tracing::*;
 
 fn main() -> EResult<()> {
     logging::setup();
     color_eyre::install()?;
 
-    let mut test_asset_register_path = std::env::current_dir()?;
-    test_asset_register_path.push("test_assets");
-    test_asset_register_path.push("minimal.bin");
+    let Some(test_asset_register_path) = std::env::args().nth(1) else {
+        return Err(eyre!("please specify path to test AssetRegister.bin"));
+    };
+    let test_asset_register_path = PathBuf::from(test_asset_register_path);
+    if !test_asset_register_path.exists() {
+        return Err(eyre!(
+            "the path specified `{}` cannot be found, please double check your input",
+            test_asset_register_path.display()
+        ));
+    }
 
-    let _raw_bytes =
-        fs::read(test_asset_register_path).wrap_err("failed to open test asset register")?;
+    let raw = fs::read(test_asset_register_path)?;
+    info!(asset_register_len = raw.len());
+
+    let mut reader = std::io::Cursor::new(&raw);
+
+    let _asset_registry: () =
+        ser_hex::CounterSubscriber::read("trace.json", &mut reader, |reader| todo!());
 
     Ok(())
 }

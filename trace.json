@@ -1,0 +1,1 @@
+{"name":"AssetRegistry_read","actions":[{"Span":{"name":"AssetRegistryHeader_read","actions":[{"Span":{"name":"AssetRegistryVersion_read","actions":[{"Read":16},{"Read":4}]}}]}},{"Span":{"name":"read","actions":[{"Read":4}]}}]}
