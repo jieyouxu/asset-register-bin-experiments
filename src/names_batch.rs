@@ -9,7 +9,7 @@ use crate::read::{read_array, Readable};
 use crate::serialized_name_header::SerializedNameHeader;
 use crate::write::{write_array, Writable};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct NamesBatch {
     // TODO: determine the actual hash and versions related to this.
     pub hash_version: u64,

@@ -9,6 +9,7 @@ mod read;
 mod write;
 mod names_batch;
 mod serialized_name_header;
+mod asset_registry;
 
 use std::path::PathBuf;
 
