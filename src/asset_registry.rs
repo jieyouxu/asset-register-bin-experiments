@@ -1,8 +1,6 @@
 use std::io::{Read, Write};
 
-use byteorder::{ReadBytesExt, WriteBytesExt, LE};
-use color_eyre::eyre::{eyre, Result as EResult, WrapErr};
-use num_enum::{IntoPrimitive, TryFromPrimitive};
+use color_eyre::eyre::Result as EResult;
 use tracing::*;
 
 use crate::asset_registry_header::AssetRegistryHeader;
@@ -40,7 +38,6 @@ impl<R: Read> Readable<R> for AssetRegistry {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::names_batch::NamesBatch;
     use crate::serialized_name_header::SerializedNameHeader;
     use std::io::Cursor;
 

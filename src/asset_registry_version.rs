@@ -1,7 +1,7 @@
 use std::io::{Read, Write};
 
 use byteorder::{ReadBytesExt, WriteBytesExt, LE};
-use color_eyre::eyre::{eyre, Result as EResult, WrapErr};
+use color_eyre::eyre::{Result as EResult, WrapErr};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use tracing::*;
 
@@ -55,7 +55,9 @@ mod tests {
     fn test_roundtrip() {
         let mut buf = [0u8; 4];
         let mut writer = Cursor::new(&mut buf[..]);
-        AssetRegistryVersion::LATEST_VERSION.write(&mut writer).unwrap();
+        AssetRegistryVersion::LATEST_VERSION
+            .write(&mut writer)
+            .unwrap();
         let mut reader = Cursor::new(&buf[..]);
         let version = AssetRegistryVersion::read(&mut reader).unwrap();
         assert_eq!(version, AssetRegistryVersion::LATEST_VERSION);

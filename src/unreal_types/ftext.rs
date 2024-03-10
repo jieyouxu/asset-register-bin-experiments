@@ -33,6 +33,7 @@ impl FText {
     /// Try to convert a [`FText`] into a [`String`]. This will fail if the [`FText`]'s backing
     /// buffer is empty, does not contain a NUL-terminator, or if the [`FText`] contains invalid
     /// UTF-8 codepoints.
+    #[allow(dead_code)]
     pub fn try_into_string(&self) -> EResult<String> {
         if self.raw.is_empty() {
             return Err(eyre!("unexpected empty FText"));

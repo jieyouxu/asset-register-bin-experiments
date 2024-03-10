@@ -1,7 +1,6 @@
 use std::io::{Read, Write};
 
-use byteorder::{ReadBytesExt, WriteBytesExt, LE};
-use color_eyre::eyre::{eyre, Result as EResult};
+use color_eyre::eyre::{Result as EResult};
 use tracing::*;
 
 use crate::read::Readable;

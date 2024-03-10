@@ -1,11 +1,10 @@
 use std::io::{Read, Write};
 
 use byteorder::{ReadBytesExt, WriteBytesExt, LE};
-use color_eyre::eyre::{eyre, Result as EResult};
+use color_eyre::eyre::Result as EResult;
 use tracing::*;
 
 use crate::read::{read_array, Readable};
-use crate::unreal_types::FName;
 use crate::write::{write_array, Writable};
 
 use super::AssetData;
@@ -35,7 +34,7 @@ impl<R: Read> Readable<R> for AssetDataCollection {
 #[cfg(test)]
 mod tests {
     use crate::assets::{FAssetBundleEntry, FSoftObjectPath};
-    use crate::unreal_types::FString;
+    use crate::unreal_types::{FName, FString};
 
     use super::*;
     use std::io::Cursor;

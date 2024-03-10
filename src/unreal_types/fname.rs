@@ -1,7 +1,7 @@
 use std::io::{Read, Write};
 
 use byteorder::{ReadBytesExt, WriteBytesExt, LE};
-use color_eyre::eyre::{eyre, Result as EResult};
+use color_eyre::eyre::{Result as EResult};
 use tracing::*;
 
 use crate::read::Readable;
@@ -38,7 +38,10 @@ mod tests {
 
     #[test]
     fn test_roundtrip() {
-        let name = FName { index: 123, number: 456 };
+        let name = FName {
+            index: 123,
+            number: 456,
+        };
         let mut buf = vec![];
         let mut writer = Cursor::new(&mut buf);
         name.write(&mut writer).unwrap();

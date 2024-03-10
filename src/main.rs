@@ -2,10 +2,10 @@
 #![feature(str_from_utf16_endian)]
 #![warn(unit_bindings)]
 
-mod assets;
 mod asset_registry;
 mod asset_registry_header;
 mod asset_registry_version;
+mod assets;
 mod logging;
 mod names_batch;
 mod read;
@@ -19,6 +19,9 @@ use std::path::PathBuf;
 use color_eyre::eyre::{eyre, Result as EResult};
 use fs_err as fs;
 use tracing::*;
+
+use crate::asset_registry::AssetRegistry;
+use crate::read::Readable as _;
 
 fn main() -> EResult<()> {
     logging::setup();
@@ -40,8 +43,10 @@ fn main() -> EResult<()> {
 
     let mut reader = std::io::Cursor::new(&raw);
 
-    let _asset_registry: () =
-        ser_hex::CounterSubscriber::read("trace.json", &mut reader, |reader| todo!());
+    let asset_registry =
+        ser_hex::CounterSubscriber::read("trace.json", &mut reader, AssetRegistry::read)?;
+
+    debug!("asset_registry = {:#?}", asset_registry);
 
     Ok(())
 }
