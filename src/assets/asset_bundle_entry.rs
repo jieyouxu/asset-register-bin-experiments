@@ -12,8 +12,8 @@ use super::FSoftObjectPath;
 
 #[derive(Debug, PartialEq)]
 pub struct FAssetBundleEntry {
-    bundle_name: FName,
-    bundles: Vec<FSoftObjectPath>,
+    pub bundle_name: FName,
+    pub bundles: Vec<FSoftObjectPath>,
 }
 
 impl<W: Write> Writable<W> for FAssetBundleEntry {
