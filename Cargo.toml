@@ -24,6 +24,7 @@ uasset_utils = { git = "https://github.com/trumank/uasset_utils.git" }
 
 [dev-dependencies]
 test-log = { version = "0.2.15", features = ["trace"], default-features = false }
+pretty_assertions = "1.4.0"
 
 [profile.dev.package.backtrace]
 opt-level = 3

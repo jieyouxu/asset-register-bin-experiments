@@ -21,6 +21,14 @@ impl From<String> for FText {
     }
 }
 
+impl<'s> From<&'s str> for FText {
+    fn from(value: &'s str) -> Self {
+        let mut bytes = value.bytes().collect::<Vec<_>>();
+        bytes.push(b'\0');
+        FText { raw: bytes }
+    }
+}
+
 impl FText {
     /// Try to convert a [`FText`] into a [`String`]. This will fail if the [`FText`]'s backing
     /// buffer is empty, does not contain a NUL-terminator, or if the [`FText`] contains invalid
