@@ -2,16 +2,17 @@
 #![feature(str_from_utf16_endian)]
 #![warn(unit_bindings)]
 
+mod assets;
+mod asset_registry;
 mod asset_registry_header;
 mod asset_registry_version;
 mod logging;
-mod read;
-mod write;
 mod names_batch;
+mod read;
 mod serialized_name_header;
-mod asset_registry;
 mod store_data;
 mod unreal_types;
+mod write;
 
 use std::path::PathBuf;
 
