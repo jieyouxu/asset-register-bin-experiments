@@ -39,18 +39,15 @@ impl<W: Write> Writable<W> for NamesBatch {
 
         writer.write_u64::<LE>(self.hash_version)?;
 
-        for hash in &self.hashes {
-            writer.write_u64::<LE>(*hash)?;
-        }
+        write_array(writer, &self.hashes, |w, h| w.write_u64::<LE>(*h))?;
 
-        for header in &self.headers {
-            header.write(writer)?;
-        }
+        write_array(writer, &self.headers, |w, h| h.write(w))?;
 
-        for s in &self.strings {
-            writer.write_all(s.as_bytes())?;
-            writer.write_u8(0)?;
-        }
+        write_array(writer, &self.strings, |w, s| -> EResult<()> {
+            w.write_all(s.as_bytes())?;
+            w.write_u8(0)?;
+            Ok(())
+        })?;
 
         Ok(())
     }
