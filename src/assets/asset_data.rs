@@ -12,13 +12,13 @@ use super::FAssetBundleEntry;
 
 #[derive(Debug, PartialEq)]
 pub struct AssetData {
-    object_path: FName,
-    package_path: FName,
-    asset_class: FName,
-    package_name: FName,
-    asset_name: FName,
-    tags: u64,
-    bundles: Vec<FAssetBundleEntry>,
+    pub object_path: FName,
+    pub package_path: FName,
+    pub asset_class: FName,
+    pub package_name: FName,
+    pub asset_name: FName,
+    pub tags: u64,
+    pub bundles: Vec<FAssetBundleEntry>,
 }
 
 impl<W: Write> Writable<W> for AssetData {
