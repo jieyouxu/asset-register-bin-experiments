@@ -10,6 +10,8 @@ mod write;
 mod names_batch;
 mod serialized_name_header;
 mod asset_registry;
+mod store_data;
+mod unreal_types;
 
 use std::path::PathBuf;
 

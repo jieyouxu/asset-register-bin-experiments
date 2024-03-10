@@ -23,7 +23,7 @@ ser-hex = { git = "https://github.com/trumank/ser-hex.git", version = "0.1.0" }
 uasset_utils = { git = "https://github.com/trumank/uasset_utils.git" }
 
 [dev-dependencies]
-test-log = { version = "0.2.15", features = ["trace"], no-default-features = true }
+test-log = { version = "0.2.15", features = ["trace"], default-features = false }
 
 [profile.dev.package.backtrace]
 opt-level = 3
