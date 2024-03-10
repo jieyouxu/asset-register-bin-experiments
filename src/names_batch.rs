@@ -81,29 +81,18 @@ impl<R: Read> Readable<R> for NamesBatch {
             }
 
             if *is_utf16 {
-                let mut buf = vec![0u16; *len as usize - 1];
+                let mut buf = vec![0u16; *len as usize];
                 for _ in 0..len - 1 {
                     let b = reader.read_u16::<LE>()?;
                     buf.push(b);
-                }
-                // Assumes the NUL-byte is u16.
-                let nul = reader.read_u16::<LE>()?;
-                if nul != 0 {
-                    return Err(eyre!("expected NUL-byte (u16), but got {nul:X}"));
                 }
                 let s = String::from_utf16(&buf)
                     .wrap_err_with(|| "failed to build a UTF-8 string from NamesBatch string")?;
                 strings.push(s);
             } else {
-                let mut buf = vec![0u8; *len as usize - 1];
+                let mut buf = vec![0u8; *len as usize];
                 reader.read_exact(&mut buf)?;
                 trace!(?buf);
-
-                // Assumes the NUL-byte is u16.
-                let nul = reader.read_u8()?;
-                if nul != 0 {
-                    return Err(eyre!("expected NUL-byte, but got {nul:X}"));
-                }
                 let s = String::from_utf8(buf)
                     .wrap_err_with(|| "failed to build a UTF-8 string from NamesBatch string")?;
                 strings.push(s);
